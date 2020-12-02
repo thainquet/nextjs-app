@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head"
 import matter from "gray-matter";
 import Link from "next/link";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Index = ({ data, title, description }) => {
   const RealData = data.map((blog) => matter(blog));
@@ -14,18 +15,21 @@ const Index = ({ data, title, description }) => {
         <meta name="Description" content={description}></meta>
         <title>{title}</title>
       </Head>
-      <h1>Index</h1>
-      <div>
-        <ul>
-          {ListItems.map((blog, i) => (
-            <li key={i}>
-              <Link href={`/${blog.slug}`}>
-                <a>{blog.title}</a>
-              </Link>
+      <div className="container-fluid">
+        <div className="col-md-4"></div>
+        <h1>Index</h1>
+        <div>
+          <ul>
+            {ListItems.map((blog, i) => (
+              <li key={i}>
+                <Link href={`/${blog.slug}`}>
+                  <a>{blog.title}</a>
+                </Link>
                 <p>{blog.description}</p>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   )
