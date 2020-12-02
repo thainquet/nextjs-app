@@ -2,6 +2,7 @@ import react from "react";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CodeBlock = ({ language, value }) => {
   return (
@@ -16,13 +17,20 @@ const Blog = ({ content, data }) => {
 
   return (
     <>
-      <h1>{frontmatter.title}</h1>
-      <h3>{frontmatter.description}</h3>
-      <ReactMarkdown
-        escapeHtml={true}
-        source={content}
-        renderers={{ code: CodeBlock }}
-      />
+      <div className="container">
+        <h1>{frontmatter.title}</h1>
+        <h3>{frontmatter.description}</h3>
+        <ReactMarkdown
+          escapeHtml={false}
+          source={content}
+          renderers={{ code: CodeBlock }}
+        />
+      </div>
+      <style jsx global>{`
+        img {
+          max-width: 75%
+        }
+      `}</style>
     </>
   );
 };
