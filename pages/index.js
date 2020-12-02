@@ -15,7 +15,7 @@ const Index = ({ data, title, description }) => {
         <meta name="Description" content={description}></meta>
         <title>{title}</title>
       </Head>
-      <div className="container-fluid">
+      <div className="container">
         <div className="col-md-4"></div>
         <h1>Index</h1>
         <div>

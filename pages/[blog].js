@@ -3,6 +3,7 @@ import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Head from "next/head"
 
 const CodeBlock = ({ language, value }) => {
   return (
@@ -17,6 +18,12 @@ const Blog = ({ content, data }) => {
 
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="utf-8" />
+        <meta name="Description" content={frontmatter.description}></meta>
+        <title>{frontmatter.title}</title>
+      </Head>
       <div className="container">
         <h1>{frontmatter.title}</h1>
         <h3>{frontmatter.description}</h3>
