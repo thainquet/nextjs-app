@@ -1,6 +1,6 @@
 ---
 
-slug: one
+slug: content/one
 title: Number 1
 description: A long description.
 date: 25-September-2020

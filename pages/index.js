@@ -54,7 +54,6 @@ export async function getStaticProps() {
   const allMarkdownFiles = allFiles.filter(file => file.name.endsWith('.md'))
 
   const data = allMarkdownFiles.map((blog) => {
-    console.log(blog.path)
     const path = `${blog.path}/${blog.name}`;
     const rawContent = fs.readFileSync(path, {
       encoding: "utf-8",
