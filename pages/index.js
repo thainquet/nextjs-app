@@ -3,6 +3,7 @@ import Head from "next/head"
 import matter from "gray-matter";
 import Link from "next/link";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FolderName } from '../configFolder'
 
 const Index = ({ data, title, description }) => {
   const RealData = data.map((blog) => matter(blog));
@@ -41,13 +42,20 @@ export default Index;
 export async function getStaticProps() {
   const siteData = await import(`../config.json`);
   const fs = require("fs");
+  let basePath = process.cwd()
+  let allFiles = []
+  FolderName.forEach(fname => {
+    let data = {
+      "name": fs.readdirSync(basePath + '/' + fname)[0],
+      "path": basePath + '/' + fname
+    }
+    allFiles.push(data)
+  })
+  const allMarkdownFiles = allFiles.filter(file => file.name.endsWith('.md'))
 
-  const files = fs.readdirSync(`${process.cwd()}/content`, "utf-8");
-
-  const blogs = files.filter((fn) => fn.endsWith(".md"));
-
-  const data = blogs.map((blog) => {
-    const path = `${process.cwd()}/content/${blog}`;
+  const data = allMarkdownFiles.map((blog) => {
+    console.log(blog.path)
+    const path = `${blog.path}/${blog.name}`;
     const rawContent = fs.readFileSync(path, {
       encoding: "utf-8",
     });
