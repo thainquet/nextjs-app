@@ -1,6 +1,5 @@
 ---
-
-slug: content/one
+slug: one
 title: Number 1
 description: A long description.
 date: 25-September-2020
@@ -19,5 +18,5 @@ Normal text
 </p>
 
 ```javascript
-console.log("abc")
+console.log("abc");
 ```
