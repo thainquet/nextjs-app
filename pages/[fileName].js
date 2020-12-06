@@ -2,22 +2,34 @@ import react from 'react'
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import { FolderName } from '../configFolder'
+import fs from 'fs'
+import path from 'path'
 
 const Post = props => {
-  console.log(props)
   return (<>
-    <div>Post:</div>
-    <ReactMarkdown
+    {Object.keys(props).length ? <ReactMarkdown
       escapeHtml={false}
       source={props.content}
-    />
+    /> : null}
   </>)
 }
 
-Post.getInitialProps = async (context) => {
-  let { fileName } = context.query
-  const fs = require('fs')
-  const path = require('path')
+export async function getStaticPaths() {
+  let basePath = process.cwd()
+  let allFiles = []
+  FolderName.forEach(fname => {
+    allFiles.push(fs.readdirSync(basePath + '/' + fname)[0])
+  })
+  const allMarkdownFiles = allFiles.filter(file => file.endsWith('.md')).map(i => i.replace(".md", ""))
+  const paths = allMarkdownFiles.map(f => ({ params: { fileName: f } }))
+  return {
+    paths,
+    fallback: true
+  };
+}
+
+export async function getStaticProps(context) {
+  let { fileName } = context.params
   let content = ""
   FolderName.forEach(fn => {
     const link = path.join(process.cwd(), fn, fileName + ".md")
@@ -25,12 +37,13 @@ Post.getInitialProps = async (context) => {
       content = fs.readFileSync(link, {
         encoding: "utf-8",
       });
-      console.log(content)
     }
   })
   return {
-    file: fileName,
-    content
+    props: {
+      fileName,
+      content
+    }
   }
 }
 
