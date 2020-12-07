@@ -17,27 +17,30 @@ const CodeBlock = ({ language, value }) => {
 };
 
 const Header = props => {
-  const {title} = props
+  const { title } = props
   return <h1>{title}</h1>
 }
 
 const Post = props => {
   const { detail, content } = props
   return (<>
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta charSet="utf-8" />
-      <meta name="Description" content={detail.description}></meta>
-      <title>{detail.title}</title>
-    </Head>
-    <div className="container">
-    <Header title={detail.title} />
-      {Object.keys(props).length ? <ReactMarkdown
-        escapeHtml={false}
-        source={content}
-        renderers={{ code: CodeBlock }}
-      /> : null}
-    </div>
+    {detail ?
+      <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta charSet="utf-8" />
+          <meta name="Description" content={detail.description}></meta>
+          <title>{detail.title}</title>
+        </Head>
+        <div className="container">
+          <Header title={detail.title} />
+          {Object.keys(props).length ? <ReactMarkdown
+            escapeHtml={false}
+            source={content}
+            renderers={{ code: CodeBlock }}
+          /> : null}
+        </div>
+      </> : null}
   </>)
 }
 
