@@ -1,11 +1,20 @@
 import react from 'react'
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { FolderName } from '../configFolder'
 import fs from 'fs'
 import path from 'path'
 import Head from 'next/head'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const CodeBlock = ({ language, value }) => {
+  return (
+    <SyntaxHighlighter showLineNumbers={true} language={language}>
+      {value}
+    </SyntaxHighlighter>
+  );
+};
 
 const Post = props => {
   const { detail, content } = props
@@ -20,6 +29,7 @@ const Post = props => {
       {Object.keys(props).length ? <ReactMarkdown
         escapeHtml={false}
         source={content}
+        renderers={{ code: CodeBlock }}
       /> : null}
     </div>
   </>)
