@@ -16,6 +16,11 @@ const CodeBlock = ({ language, value }) => {
   );
 };
 
+const Header = props => {
+  const {title} = props
+  return <h1>{title}</h1>
+}
+
 const Post = props => {
   const { detail, content } = props
   return (<>
@@ -26,6 +31,7 @@ const Post = props => {
       <title>{detail.title}</title>
     </Head>
     <div className="container">
+    <Header title={detail.title} />
       {Object.keys(props).length ? <ReactMarkdown
         escapeHtml={false}
         source={content}
