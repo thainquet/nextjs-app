@@ -4,13 +4,24 @@ import ReactMarkdown from "react-markdown";
 import { FolderName } from '../configFolder'
 import fs from 'fs'
 import path from 'path'
+import Head from 'next/head'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Post = props => {
+  const { detail, content } = props
   return (<>
-    {Object.keys(props).length ? <ReactMarkdown
-      escapeHtml={false}
-      source={props.content}
-    /> : null}
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta charSet="utf-8" />
+      <meta name="Description" content={detail.description}></meta>
+      <title>{detail.title}</title>
+    </Head>
+    <div className="container">
+      {Object.keys(props).length ? <ReactMarkdown
+        escapeHtml={false}
+        source={content}
+      /> : null}
+    </div>
   </>)
 }
 
@@ -39,10 +50,12 @@ export async function getStaticProps(context) {
       });
     }
   })
+
   return {
     props: {
       fileName,
-      content
+      content: matter(content).content,
+      detail: matter(content).data
     }
   }
 }
